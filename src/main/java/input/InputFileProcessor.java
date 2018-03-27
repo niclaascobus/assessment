@@ -6,14 +6,13 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class InputFileProcessor {
 
     public static final String SPACE = " ";
+    public static final String FOLLOWS = "follows";
+    public static final String COMMA = ",";
 
     public List<String> readFile(String fullyQualifiedName) throws Exception {
         FileInputStream fis = null;
@@ -45,16 +44,36 @@ public class InputFileProcessor {
     }
 
     public Map<String, User> buildUsers(List<String> userInformation)  {
-        StringTokenizer stringTokenizer = null;
+        Map<String, User> users = new HashMap<>();
         for(String userInfoLine : userInformation)  {
-            stringTokenizer = new StringTokenizer(userInfoLine, SPACE);
-            /*String userName = stringTokenizer.nextToken();
-            String followers = stringTokenizer.nextToken();
-            System.out.println("x" + userName + " x " + followers);*/
-            while(stringTokenizer.hasMoreTokens())  {
-                System.out.println(stringTokenizer.nextToken());
+            String follower = userInfoLine.substring(0,userInfoLine.indexOf(FOLLOWS)).trim();
+
+            User followingUser = null;
+
+            if(!users.containsKey(follower))    {
+                followingUser = new User(follower);
+                users.put(follower, followingUser);
             }
+            String beingFollowed = userInfoLine.substring(userInfoLine.indexOf(SPACE, userInfoLine.indexOf(FOLLOWS)), userInfoLine.length()).trim();
+            System.out.println("**" + follower + "**" + beingFollowed + "**");
+
+
+            User followedUser = null;
+            StringTokenizer tokenizer = new StringTokenizer(beingFollowed, COMMA);
+            while(tokenizer.hasMoreTokens()) {
+                String aUserName = tokenizer.nextToken().trim();
+                if(users.containsKey(aUserName)) {
+                    followedUser = users.get(aUserName);
+                }else {
+                    followedUser = new User(aUserName);
+                    users.put(aUserName, followedUser);
+                }
+                followedUser.addFollower(follower);
+            }
+
+
+
         }
-        return null;
+        return users;
     }
 }

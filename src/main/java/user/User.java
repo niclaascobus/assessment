@@ -17,7 +17,9 @@ public class User {
         if(followers == null)   {
             followers = new HashMap<>();
         }
-        followers.put(followerUserName, followerUserName);
+        if(!followers.containsKey(followerUserName)) {
+            followers.put(followerUserName, followerUserName);
+        }
     }
 
     public String getUserName() {
