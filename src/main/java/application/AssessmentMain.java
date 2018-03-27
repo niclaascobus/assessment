@@ -1,14 +1,17 @@
 package application;
 
-import input.InputFileReader;
+import input.InputFileProcessor;
+
+import java.util.List;
 
 public class AssessmentMain {
 
     public static void main(String[] args)  {
-        InputFileReader inputFileReader = new InputFileReader();
+        InputFileProcessor inputFileProcessor = new InputFileProcessor();
         try {
-            inputFileReader.readFile("/home/nico/Downloads/AllanGray/user.txt");
-            inputFileReader.readFile("/home/nico/Downloads/AllanGray/tweet.txt");
+            List<String> users = inputFileProcessor.readFile("/home/nico/Downloads/AllanGray/user.txt");
+            List<String> tweets = inputFileProcessor.readFile("/home/nico/Downloads/AllanGray/tweet.txt");
+            inputFileProcessor.buildUsers(users);
         } catch (Exception e)   {
             e.printStackTrace();
         }
