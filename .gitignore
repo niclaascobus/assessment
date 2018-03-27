@@ -14,3 +14,9 @@ gradle-app.setting
 # gradle/wrapper/gradle-wrapper.properties
 # ignore all class files
 *.class
+
+
+# User-specific stuff
+.idea/**/workspace.xml
+.idea/**/tasks.xml
+.idea/dictionaries
