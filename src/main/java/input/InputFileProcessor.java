@@ -14,7 +14,7 @@ public class InputFileProcessor {
     public static final String FOLLOWS = "follows";
     public static final String COMMA = ",";
 
-    public List<String> readFile(String fullyQualifiedName) throws Exception {
+    public List<String> readFile(String fullyQualifiedName) {
         FileInputStream fis = null;
         InputStreamReader isr = null;
         BufferedReader br = null;
@@ -33,11 +33,15 @@ public class InputFileProcessor {
         } catch (Exception e)   {
             System.out.println("Error reading file " + fullyQualifiedName);
             e.printStackTrace();
-            throw e;
+            return null;
         } finally   {
-            fis.close();
-            isr.close();
-            br.close();
+            try {
+                fis.close();
+                isr.close();
+                br.close();
+            }catch (Exception ee)   {
+                System.out.println("Error closing file streams");
+            }
         }
         return fileLines;
     }

@@ -18,7 +18,15 @@ public class AssessmentMain {
         InputFileProcessor inputFileProcessor = new InputFileProcessor();
         try {
             List<String> usersFromFile = inputFileProcessor.readFile(args[0]);
+            if(usersFromFile == null || usersFromFile.size() < 1)   {
+                System.out.println("Error reading user file or user file empty");
+                return;
+            }
             List<String> tweets = inputFileProcessor.readFile(args[1]);
+            if(tweets == null || tweets.size() < 1)  {
+                System.out.println("Error reading tweet file or tweet file empty");
+                return;
+            }
             Map<String, User> users = inputFileProcessor.buildUsers(usersFromFile);
             if(users == null)   {
                 System.out.println("Could not load users");
