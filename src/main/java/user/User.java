@@ -10,6 +10,7 @@ public class User {
     private String userName;
     private Map<String, String> followers;
     private List<String> tweets;
+    private Map<String, User> following;
 
     public User(String userName)    {
         this.userName = userName;
@@ -21,6 +22,15 @@ public class User {
         }
         if(!followers.containsKey(followerUserName)) {
             followers.put(followerUserName, followerUserName);
+        }
+    }
+
+    public void addFollowing(User user)    {
+        if(following == null)   {
+            following = new HashMap<>();
+        }
+        if(!following.containsKey(user.getUserName())) {
+            following.put(userName, user);
         }
     }
 
@@ -36,9 +46,12 @@ public class User {
         if(tweets != null) {
             for (String tweet : tweets) {
                 System.out.println("@" + userName + ": " + tweet);
-                if (followers != null) {
-                    for (String follower : followers.keySet()) {
-                        System.out.println("@" + follower + ": " + tweet);
+            }
+            if (following != null) {
+                for (User followingUser : following.values()) {
+                    if(followingUser.getTweets() != null && followingUser.getTweets().size() > 0) {
+                        for (String userTweet : followingUser.getTweets())
+                            System.out.println("@" + followingUser.getUserName() + ": " + userTweet);
                     }
                 }
             }

@@ -6,14 +6,13 @@ import user.User;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class AssessmentMain {
 
     public static void main(String[] args)  {
         if(args.length != 2)    {
-            System.out.println("Please provide the fully qualified names to the user and tweet files");
+            System.out.println("Please provide the fully qualified names to the (1) user and (2) tweet files");
             return;
         }
         InputFileProcessor inputFileProcessor = new InputFileProcessor();
@@ -27,7 +26,6 @@ public class AssessmentMain {
             for(User aUser : sortedUsers)  {
                 aUser.tweet();
             }
-            System.out.println("Done");
         } catch (Exception e)   {
             e.printStackTrace();
         }

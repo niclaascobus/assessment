@@ -25,14 +25,13 @@ public class InputFileProcessor {
             br = new BufferedReader(isr);
             String aLine = br.readLine();
             while (aLine != null)   {
-                System.out.println("******* " + aLine);
                 if(!aLine.isEmpty()) {
                     fileLines.add(aLine);
                 }
                 aLine = br.readLine();
             }
         } catch (Exception e)   {
-            System.out.println("Error reading user file");
+            System.out.println("Error reading file " + fullyQualifiedName);
             e.printStackTrace();
             throw e;
         } finally   {
@@ -53,10 +52,10 @@ public class InputFileProcessor {
             if(!users.containsKey(follower))    {
                 followingUser = new User(follower);
                 users.put(follower, followingUser);
+            } else  {
+                followingUser = users.get(follower);
             }
             String beingFollowed = userInfoLine.substring(userInfoLine.indexOf(SPACE, userInfoLine.indexOf(FOLLOWS)), userInfoLine.length()).trim();
-            System.out.println("**" + follower + "**" + beingFollowed + "**");
-
 
             User followedUser = null;
             StringTokenizer tokenizer = new StringTokenizer(beingFollowed, COMMA);
@@ -69,6 +68,7 @@ public class InputFileProcessor {
                     users.put(aUserName, followedUser);
                 }
                 followedUser.addFollower(follower);
+                followingUser.addFollowing(followedUser);
             }
         }
         return users;
@@ -78,7 +78,6 @@ public class InputFileProcessor {
         for(String tweet : tweets)  {
             String userThatTweeted = tweet.substring(0, tweet.indexOf(">"));
             String aTweet = tweet.substring(tweet.indexOf(">")+1, tweet.length()).trim();
-            System.out.println(userThatTweeted + " > " + aTweet);
             if(users.containsKey(userThatTweeted))  {
                 users.get(userThatTweeted).addTweet(aTweet);
             } else {
@@ -86,16 +85,4 @@ public class InputFileProcessor {
             }
         }
     }
-
-    /*public Map<String, User> buildUsers(List<String> userInformation)  {
-        Map<String, String[]> rawUserData = new HashMap<>();
-        for(String userInfoLine : userInformation)  {
-            String follower = userInfoLine.substring(0,userInfoLine.indexOf(FOLLOWS)).trim();
-            String beingFollowed = userInfoLine.substring(userInfoLine.indexOf(SPACE, userInfoLine.indexOf(FOLLOWS)), userInfoLine.length()).trim();
-            String[] beingFollowedArray = beingFollowed.split(",");
-            rawUserData.put(follower.trim(), beingFollowedArray);
-        }
-
-        return null;
-    }*/
 }
