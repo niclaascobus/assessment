@@ -20,7 +20,15 @@ public class AssessmentMain {
             List<String> usersFromFile = inputFileProcessor.readFile(args[0]);
             List<String> tweets = inputFileProcessor.readFile(args[1]);
             Map<String, User> users = inputFileProcessor.buildUsers(usersFromFile);
-            inputFileProcessor.assignTweets(users, tweets);
+            if(users == null)   {
+                System.out.println("Could not load users");
+                return;
+            }
+            boolean success = inputFileProcessor.assignTweets(users, tweets);
+            if(!success)    {
+                System.out.println("Could not assign tweets");
+                return;
+            }
             Collection<User> allUsers = users.values();
             List<User> sortedUsers = allUsers.stream().sorted((user1, user2) -> user1.getUserName().compareTo(user2.getUserName())).collect(Collectors.toList());
             for(User aUser : sortedUsers)  {

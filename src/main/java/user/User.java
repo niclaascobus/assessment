@@ -8,21 +8,11 @@ import java.util.Map;
 public class User {
 
     private String userName;
-    private Map<String, String> followers;
     private List<String> tweets;
     private Map<String, User> following;
 
     public User(String userName)    {
         this.userName = userName;
-    }
-
-    public void addFollower(String followerUserName)    {
-        if(followers == null)   {
-            followers = new HashMap<>();
-        }
-        if(!followers.containsKey(followerUserName)) {
-            followers.put(followerUserName, followerUserName);
-        }
     }
 
     public void addFollowing(User user)    {
@@ -66,20 +56,11 @@ public class User {
         this.userName = userName;
     }
 
-    public void setFollowers(Map<String, String> followers) {
-        this.followers = followers;
-    }
-
     public List<String> getTweets() {
         return tweets;
     }
 
     public void setTweets(List<String> tweets) {
         this.tweets = tweets;
-    }
-
-    public Map<String, String> getFollowers() {
-        return followers;
-
     }
 }
