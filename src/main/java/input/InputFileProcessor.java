@@ -49,7 +49,7 @@ public class InputFileProcessor {
             String follower = userInfoLine.substring(0,userInfoLine.indexOf(FOLLOWS)).trim();
 
             User followingUser = null;
-
+            //ensure that all users are created and added to Map
             if(!users.containsKey(follower))    {
                 followingUser = new User(follower);
                 users.put(follower, followingUser);
@@ -70,10 +70,32 @@ public class InputFileProcessor {
                 }
                 followedUser.addFollower(follower);
             }
-
-
-
         }
         return users;
     }
+
+    public void assignTweets(Map<String, User> users, List<String> tweets) {
+        for(String tweet : tweets)  {
+            String userThatTweeted = tweet.substring(0, tweet.indexOf(">"));
+            String aTweet = tweet.substring(tweet.indexOf(">")+1, tweet.length()).trim();
+            System.out.println(userThatTweeted + " > " + aTweet);
+            if(users.containsKey(userThatTweeted))  {
+                users.get(userThatTweeted).addTweet(aTweet);
+            } else {
+                System.out.println("The following user tweeted but he does not exist: " + userThatTweeted);
+            }
+        }
+    }
+
+    /*public Map<String, User> buildUsers(List<String> userInformation)  {
+        Map<String, String[]> rawUserData = new HashMap<>();
+        for(String userInfoLine : userInformation)  {
+            String follower = userInfoLine.substring(0,userInfoLine.indexOf(FOLLOWS)).trim();
+            String beingFollowed = userInfoLine.substring(userInfoLine.indexOf(SPACE, userInfoLine.indexOf(FOLLOWS)), userInfoLine.length()).trim();
+            String[] beingFollowedArray = beingFollowed.split(",");
+            rawUserData.put(follower.trim(), beingFollowedArray);
+        }
+
+        return null;
+    }*/
 }
