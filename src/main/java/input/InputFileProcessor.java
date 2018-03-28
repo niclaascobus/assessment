@@ -115,7 +115,7 @@ public class InputFileProcessor {
             } else {
                 System.out.println("The following user tweeted but he does not exist: " + userThatTweeted);
             }
-            return true;
         }
+        return true;
     }
 }
