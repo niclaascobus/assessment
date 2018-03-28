@@ -89,7 +89,7 @@ public class InputFileProcessor {
 
     public boolean assignTweets(Map<String, User> users, List<String> tweets) {
         for(String tweet : tweets)  {
-            if(tweet.substring(0, tweet.indexOf(">") < 0)   {
+            if(tweet.indexOf(">") < 0)   {
                 System.out.println("The format of a line in the tweet file is incorrect");
                 System.out.println("Correct format: > ContentOfTheTweet");
                 System.out.println("Please correct the file and resubmit");
